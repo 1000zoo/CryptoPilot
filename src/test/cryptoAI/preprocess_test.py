@@ -2,7 +2,6 @@ import unittest
 import pyupbit
 import os
 import sys
-import logging
 
 root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../'))
 sys.path.append(root_path)
@@ -20,7 +19,6 @@ def test_dataframe_results():
     data = preprocessing(pyupbit.get_ohlcv("KRW-BTC", "minute1", 5))
     print(data.shape[0])
     print(data.shape[1])
-    print(data[:2][:2])
 
 if __name__ == "__main__":
     test_dataframe_results()
