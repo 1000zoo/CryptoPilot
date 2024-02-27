@@ -17,8 +17,9 @@ class PreprocessTest(unittest.TestCase):
 
 def test_dataframe_results():
     data = preprocessing(pyupbit.get_ohlcv("KRW-BTC", "minute1", 5))
-    print(data.shape[0])
-    print(data.shape[1])
+    print(data.shape)
+    print(type(data))
+    print(data)
 
 if __name__ == "__main__":
     test_dataframe_results()
