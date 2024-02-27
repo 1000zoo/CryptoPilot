@@ -15,12 +15,12 @@ class PreprocessTest(unittest.TestCase):
         print(preprocessing(pyupbit.get_ohlcv("KRW-BTC", "minute1", 5)))
 
 
-def test_dataframe_results():
+def test_predict_results():
     data = preprocessing(pyupbit.get_ohlcv("KRW-BTC", "minute1", 5))
     print(data.shape)
     print(type(data))
     print(data)
 
 if __name__ == "__main__":
-    test_dataframe_results()
+    test_predict_results()
 
