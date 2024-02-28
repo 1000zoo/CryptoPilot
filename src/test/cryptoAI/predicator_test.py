@@ -6,8 +6,8 @@ import sys
 root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../'))
 sys.path.append(root_path)
 
-from src.cryptoAI.preprocess import *
-from src.cryptoAI.predicator import *
+from src.main.cryptoAI.preprocess import *
+from src.main.cryptoAI.predicator import *
 
 
 
