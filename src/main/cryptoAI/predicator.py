@@ -10,7 +10,7 @@ import pyupbit as pu
 
 from src.main.cryptoAI.preprocess import preprocessing
 
-TEMPORARY_MODEL_PATH = "model/RNN_initial_model.h5"
+TEMPORARY_MODEL_PATH = "model/model_20240228.h5"
 
 TICKER = "KRW-BTC"
 INTERVAL = "minute1"
