@@ -16,7 +16,7 @@ TICKER = "KRW-BTC"
 INTERVAL = "minute1"
 DATA_COUNT = 6
 
-TRADING_THRESHOLD = 0.05
+TRADING_THRESHOLD = 0.015
 
 """
 predict(): 실제로 호출되는 부분 (외부로부터 호출받는 부분)
