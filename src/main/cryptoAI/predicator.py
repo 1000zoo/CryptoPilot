@@ -10,22 +10,19 @@ from sklearn.preprocessing import MinMaxScaler
 
 TEMPORARY_MODEL_PATH = "model/RNN_initial_model.h5"
 
+
+
 """
-predicate: 모델로부터 가격을 예측받는다.
+model_predict: 모델로부터 가격을 예측받는다.
 
 파라미터
-- pyupbit와 독립시키기 위해, 모델의 입력값이 될 sequence를 따로 받아온다.
-- sequence는 {모델의 input 개수} 만큼의 OHLCV 값들이 DataFrame으로 들어온다.
+- sequence는 {모델의 input 개수} 만큼의 OHLCV 값들이 전처리 되어 ndarray로 들어온다.
 """
-def predicate(sequence : np.ndarray):
+def model_predict(sequence : np.ndarray):
     model = load_model()
     result = model.predict(sequence)
     result = np.mean(result, axis=1)
 
-    y_scaler = mock_scaler()
-    result = np.array([[result[0]]])
-
-    result = y_scaler.inverse_transform(result.reshape(-1, 1))
     return result
 
 

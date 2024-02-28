@@ -15,13 +15,13 @@ class PredicatorTest(unittest.TestCase):
     pass
 
 
-def test_predicate():
-    data = preprocessing(pyupbit.get_ohlcv("KRW-BTC", "minute1", 5))
-    result = predicate(data)
+def test_model_predict():
+    data = preprocessing(pyupbit.get_ohlcv("KRW-BTC", "minute1", 6))
+    result = model_predict(data)
     import datetime
     print(datetime.datetime.now())
     print(result)
 
 if __name__ == "__main__":
-    test_predicate()
+    test_model_predict()
 
