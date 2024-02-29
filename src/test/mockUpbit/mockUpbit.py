@@ -40,7 +40,7 @@ class MockUpbit(pu.Upbit):
         if self.krw_balance < price:
             return
         self.krw_balance -= price
-        buy_amount = (price * 0.95)/ (pu.get_current_price("KRW-BTC"))
+        buy_amount = (price * 0.9995)/ (pu.get_current_price("KRW-BTC"))
         self.avg_buy_price = ((self.avg_buy_price * self.btc_balance) + price) / (self.btc_balance + buy_amount)
         self.btc_balance += buy_amount
 
@@ -50,7 +50,7 @@ class MockUpbit(pu.Upbit):
         if self.btc_balance < volume:
             return
         self.btc_balance -= volume
-        self.krw_balance += volume * pu.get_current_price("KRW-BTC") * 0.95
+        self.krw_balance += volume * pu.get_current_price("KRW-BTC") * 0.9995
     
     # 안쓰는 메서드여도 최소 주문 관련 메서드는 만일을 대비하여 빈 메서드 구현
     def get_chance(self, ticker, contain_req=False):
