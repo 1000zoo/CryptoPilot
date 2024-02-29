@@ -47,21 +47,46 @@ class Invastor:
         self.__init_krw = upbit.get_balance("KRW")
 
     def buy_market_order(self, ticker : str, price):
-        self.upbit.buy_market_order(ticker, price)
-        trade_price = price * 0.95 / self.upbit.get_balance(ticker.split("-")[1])
-        self.logger.write_trade_log(
-            ticker=ticker, trade_type="buy", trade_price=trade_price,
-            price=price, volume=price / trade_price
-        )
+        response = self.upbit.buy_market_order(ticker, price)
+        if response:
+            self.logger.write_trade_log(
+                ticker=ticker, trade_type="buy", trade_price=self.get_trade_price(response),
+                price=self.get_price(response), volume=self.get_volume(response)
+            )
 
     def sell_market_order(self, ticker, volume):
-        self.upbit.sell_market_order(ticker, volume)
+        response = self.upbit.sell_market_order(ticker, volume)
+        if response:
+            trade_price = self.get_trade_price(response)
+            v = self.get_volume(response)
+            self.logger.write_trade_log(
+                ticker=ticker, trade_type="sell", trade_price=trade_price,
+                price=trade_price*v, volume=v
+            )
 
     def get_trade_price(self, trade_log : dict):
         if not "uuid" in trade_log:
             return -1
         try:
-            return self.upbit.get_individual_order(trade_log["uuid"])["trades"][0]["price"]
+            return float(self.upbit.get_individual_order(trade_log["uuid"])["trades"][0]["price"])
+        except KeyError as e:
+            print(e)
+            return -1
+        
+    def get_volume(self, trade_log : dict):
+        if not "uuid" in trade_log:
+            return -1
+        try:
+            return float(self.upbit.get_individual_order(trade_log["uuid"])["trades"][0]["volume"])
+        except KeyError as e:
+            print(e)
+            return -1
+        
+    def get_price(self, trade_log : dict):
+        if not "uuid" in trade_log:
+            return -1
+        try:
+            return float(trade_log["price"])
         except KeyError as e:
             print(e)
             return -1
@@ -69,6 +94,10 @@ class Invastor:
 
 
 if __name__ == "__main__":
-    pass
-
+    from ___key___ import ACCESS_KEY, SECRET_KEY
+    upbit = pu.Upbit(ACCESS_KEY, SECRET_KEY)
+    logger = Logger("real upbit test 0440")
+    inv = Invastor(upbit, logger)
+    # inv.buy_market_order("KRW-BTC", 8000)
+    inv.sell_market_order("KRW-BTC", 0.00009263)
 
