@@ -1,7 +1,7 @@
 import pyupbit
 import datetime
 import time
-
+from src.main.cryptoAI.predicator import predicate
 #로그인
 #upbit=pyupbit.Upbit(access_key,secret_key)
 upbit=1     #임시
@@ -20,7 +20,7 @@ def buy(price):
 def trade_engine(flag,amount,money):
     #현재 비트코인의 가격(보유중인 가격 혹은 현재 시장가격)
     #현재 가격에 대한 코드는 추가 작업이 필요함(보유중이지 않다면 예측값을 저장해서 가지고 있어야함)
-    #current_price=upbit.get_balance('KRW-BTC')['avg_buy_price']
+    #current_price=upbit.get_balance('KRW-BTC')['avg_buy_price'] if flag else 0
     current_price=75000000      #임시
 
     #1분뒤 예측되는 비트코인의 가격
@@ -38,7 +38,7 @@ def trade_engine(flag,amount,money):
     #비트코인을 보유하고 있지 않을 때
     else:
         #예측값이 오를 것으로 예상될 경우, 매수 진행
-        if is_wait(current_price,predict_price):
+        if predicate()==1 or predicate()==0:
             buy(money*0.95)     #수수료 제외
         #예측값이 떨어질 것으로 예상될 경우, 아무 행동도 취하지 않음
         else:
@@ -55,34 +55,40 @@ def is_wait(current,next):
     #기울기가 음수일 경우
     #미세 조정 필요
     else:
+        '''
         #수익률이 -0.05%보다는 높다면 True
         if inclination>-0.05:
             return True
         #수익률이 -0.05%이하면 False
         else:
             return False
+        '''
+        return False
 
 def main():
-    #현재 보유중인 현금
-    #money=upbit.get_balance('KRW-BTC')
-    money=80000000
-
-    #보유중인 비트코인 수량
-    amount=10       #임시
-
-    #현재 보유중인지 아닌지 상태 저장
-    flag=True if amount>0 else False
-
     #이전 시간 기록
     previous_minute=None
 
     #매 분마다 매매 진행
     while True:
+        #현재 보유중인 현금
+        #money=upbit.get_balance('KRW-BTC')
+        money=80000000
+
+        #보유중인 비트코인 수량
+        amount=10       #임시
+
+        #현재 보유중인지 아닌지 상태 저장
+        flag=True if amount>0 else False
+
         current_time=datetime.datetime.now()
         current_minute=current_time.minute
 
         #시간이 변경됐으면 매매함수 호출
-        if current_minute!=previous_minute:
+        if previous_minute==None:
+            previous_minute=current_minute
+
+        elif current_minute!=previous_minute:
             previous_minute=current_minute
             trade_engine(flag,amount,money)
 
