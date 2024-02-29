@@ -65,12 +65,11 @@ class MockUpbitTest(unittest.TestCase):
             self.upbit.buy_market_order("KRW-BTC", third_buy)
             third_avg = self.upbit.get_avg_buy_price("BTC")
 
-            print("first_avg", first_avg)
-            print("second_avg", second_avg)
-            print("third_avg", third_avg)
+            print("first_avg", first_avg)       # => 1000
+            print("second_avg", second_avg)     # => 1750.0
+            print("third_avg", third_avg)       # => 2062.5
 
 
-    
 if __name__ == "__main__":
     # unittest.main()
     m = MockUpbitTest()
