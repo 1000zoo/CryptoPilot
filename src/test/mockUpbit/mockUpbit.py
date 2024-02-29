@@ -39,8 +39,8 @@ class MockUpbit(pu.Upbit):
             return
         if self.krw_balance < price:
             return
-        self.krw_balance -= price * 0.95
-        buy_amount = price / (pu.get_current_price("KRW-BTC"))
+        self.krw_balance -= price
+        buy_amount = (price * 0.95)/ (pu.get_current_price("KRW-BTC"))
         self.avg_buy_price = ((self.avg_buy_price * self.btc_balance) + price) / (self.btc_balance + buy_amount)
         self.btc_balance += buy_amount
 

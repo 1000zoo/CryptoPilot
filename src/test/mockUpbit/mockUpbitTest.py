@@ -29,8 +29,8 @@ class MockUpbitTest(unittest.TestCase):
             result = fetch_data_from_api()
 
             self.assertEqual(self.upbit.get_balance("KRW"), 900000)
-            self.assertAlmostEqual(self.upbit.get_balance("BTC"), 0.001282, places=6)
-            self.assertAlmostEqual(self.upbit.get_amount("BTC"), 100000, places=1)
+            self.assertAlmostEqual(self.upbit.get_balance("BTC"), 100000 * 0.95 / 78_000_000, places=6)
+            self.assertAlmostEqual(self.upbit.get_amount("BTC"), 100000 * 0.95, places=1)
 
 
     """
@@ -71,6 +71,6 @@ class MockUpbitTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    # unittest.main()
-    m = MockUpbitTest()
-    m.test_avg_amount()
+    unittest.main()
+    # m = MockUpbitTest()
+    # m.test_avg_amount()
