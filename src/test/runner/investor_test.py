@@ -16,7 +16,7 @@ def test_log():
 
 class InvastorTest:
     def __init__(self) -> None:
-        self.user = Invastor(MockUpbit(100000, 0), Logger("invastorTest"))
+        self.user = Investor(MockUpbit(100000, 0), Logger("invastorTest"))
     
     def test_buy(self):
         self.user.buy_market_order("KRW-BTC", 10000)

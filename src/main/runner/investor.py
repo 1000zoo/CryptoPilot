@@ -40,7 +40,7 @@ class Logger:
             data = [timestamp, ticker, trade_type, trade_price, price, volume, profit]
             writer.writerow(data)
 
-class Invastor:
+class Investor:
     def __init__(self, upbit : pu.Upbit, logger : Logger) -> None:
         self.upbit = upbit
         self.logger = logger
@@ -97,7 +97,7 @@ if __name__ == "__main__":
     from ___key___ import ACCESS_KEY, SECRET_KEY
     upbit = pu.Upbit(ACCESS_KEY, SECRET_KEY)
     logger = Logger("real upbit test 0440")
-    inv = Invastor(upbit, logger)
+    inv = Investor(upbit, logger)
     # inv.buy_market_order("KRW-BTC", 8000)
     inv.sell_market_order("KRW-BTC", 0.00009263)
 
