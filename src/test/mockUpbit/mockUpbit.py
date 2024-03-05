@@ -39,27 +39,39 @@ class MockUpbit(pu.Upbit):
             return
         if self.krw_balance < price:
             return
-        self.krw_balance -= price * 0.95
-        buy_amount = price / (pu.get_current_price("KRW-BTC"))
+        self.krw_balance -= price
+        trade_price = pu.get_current_price("KRW-BTC")
+        buy_amount = (price * 0.9995)/ trade_price
         self.avg_buy_price = ((self.avg_buy_price * self.btc_balance) + price) / (self.btc_balance + buy_amount)
         self.btc_balance += buy_amount
+
+        return {
+            "uuid" : "1111", "price" : price,
+            "trades" : [{"price" : trade_price, "volume" : buy_amount}]
+        }
 
     def sell_market_order(self, ticker, volume, contain_req=False):
         if ticker != "KRW-BTC":
             return
         if self.btc_balance < volume:
             return
+        trade_price = pu.get_current_price("KRW-BTC")
+        price = volume * trade_price * 0.9995
         self.btc_balance -= volume
-        self.krw_balance += volume * pu.get_current_price("KRW-BTC") * 0.95
+        self.krw_balance += price
+
+        return {
+            "uuid" : "1111", "price" : price,
+            "trades" : [{"price" : trade_price, "volume" : volume}]
+        }
+    def get_individual_order(self, uuid, contain_req=False):
+        return {"trades":[{"price":-1, "volume":-1}]}
     
     # 안쓰는 메서드여도 최소 주문 관련 메서드는 만일을 대비하여 빈 메서드 구현
     def get_chance(self, ticker, contain_req=False):
         return ""
     
     def get_order(self, ticker_or_uuid, state='wait', page=1, limit=100, contain_req=False):
-        return ""
-    
-    def get_individual_order(self, uuid, contain_req=False):
         return ""
     
     def cancel_order(self, uuid, contain_req=False):
