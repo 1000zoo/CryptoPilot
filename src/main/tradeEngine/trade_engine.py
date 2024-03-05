@@ -1,10 +1,20 @@
 import pyupbit
 import datetime
 import time
-from src.main.cryptoAI.predicator import predicate
+from src.main.cryptoAI.predicator import predict
+import os
+import sys
+import keras
+from sklearn.preprocessing import MinMaxScaler
+from pandas.core.frame import DataFrame
+
+root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../'))
+sys.path.append(root_path)
+
+from src.test.mockUpbit.mockUpbit import *
+
 #로그인
 #upbit=pyupbit.Upbit(access_key,secret_key)
-upbit=1     #임시
 
 #매도
 def sell(amount):
@@ -18,6 +28,7 @@ def buy(price):
 
 #매수, 매도 진행 코드
 def trade_engine(flag,amount,money):
+    '''
     #현재 비트코인의 가격(보유중인 가격 혹은 현재 시장가격)
     #현재 가격에 대한 코드는 추가 작업이 필요함(보유중이지 않다면 예측값을 저장해서 가지고 있어야함)
     #current_price=upbit.get_balance('KRW-BTC')['avg_buy_price'] if flag else 0
@@ -26,11 +37,13 @@ def trade_engine(flag,amount,money):
     #1분뒤 예측되는 비트코인의 가격
     #predict_price=예측값 호출
     predict_price=76000000        #임시
+    '''
+    state=predict()
 
     #현재 비트코인을 보유하고 있을 때
     if flag:
         #예측값이 더 오를것으로 예상될 경우, 아무 행동도 취하지 않음
-        if is_wait(current_price,predict_price):
+        if state==0 or state==1:
             pass
         #예측값이 떨어질 것으로 예상될 경우, 매도 진행
         else:
@@ -38,8 +51,8 @@ def trade_engine(flag,amount,money):
     #비트코인을 보유하고 있지 않을 때
     else:
         #예측값이 오를 것으로 예상될 경우, 매수 진행
-        if predicate()==1 or predicate()==0:
-            buy(money*0.95)     #수수료 제외
+        if state==1 or state==0:
+            buy(money)
         #예측값이 떨어질 것으로 예상될 경우, 아무 행동도 취하지 않음
         else:
             pass
@@ -65,18 +78,20 @@ def is_wait(current,next):
         '''
         return False
 
-def main():
+def main(money,amount):
     #이전 시간 기록
     previous_minute=None
 
     #매 분마다 매매 진행
     while True:
+        '''
         #현재 보유중인 현금
         #money=upbit.get_balance('KRW-BTC')
         money=80000000
 
         #보유중인 비트코인 수량
         amount=10       #임시
+        '''
 
         #현재 보유중인지 아닌지 상태 저장
         flag=True if amount>0 else False
@@ -94,3 +109,6 @@ def main():
 
         #1초마다 시간 확인
         time.sleep(1)
+
+if __name__=='__main__':
+    pass
