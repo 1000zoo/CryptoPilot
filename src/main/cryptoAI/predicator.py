@@ -10,13 +10,13 @@ import pyupbit as pu
 
 from src.main.cryptoAI.preprocess import preprocessing
 
-TEMPORARY_MODEL_PATH = "model/model_20240228.h5"
+TEMPORARY_MODEL_PATH = "model/datasize2000000-sequence64-epochs500-batchsize2048-ckpt0005.h5"
 
 TICKER = "KRW-BTC"
 INTERVAL = "minute1"
-DATA_COUNT = 6
+SEQUENCE_LENGTH = 64
 
-TRADING_THRESHOLD = 0.015
+TRADING_THRESHOLD = 0.01
 
 """
 predict(): 실제로 호출되는 부분 (외부로부터 호출받는 부분)
@@ -26,8 +26,8 @@ return
 상승 => 1 / 횡보 => 0 / 하락 => -1
 """
 def predict() -> int:
-    ohlcv = pu.get_ohlcv(TICKER, INTERVAL, DATA_COUNT)
-    result = model_predict(preprocessing(ohlcv))
+    ohlcv = pu.get_ohlcv(TICKER, INTERVAL, SEQUENCE_LENGTH + 1)
+    result = model_predict(preprocessing(ohlcv, SEQUENCE_LENGTH))
     print(result)
     return _encode(result)
 

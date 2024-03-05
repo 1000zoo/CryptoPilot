@@ -64,6 +64,12 @@ class Investor:
                 price=trade_price*v, volume=v
             )
 
+    def get_balance(self, ticker="KRW"):
+        return self.upbit.get_balance(ticker)
+    
+    def get_amount(self, ticker="KRW"):
+        return self.upbit.get_amount(ticker)
+
     def get_trade_price(self, trade_log : dict):
         if not "uuid" in trade_log:
             return -1
