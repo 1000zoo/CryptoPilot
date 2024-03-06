@@ -11,7 +11,7 @@ def trade_engine(investor : Investor):
     #현재 가격에 대한 코드는 추가 작업이 필요함(보유중이지 않다면 예측값을 저장해서 가지고 있어야함)
     #current_price=upbit.get_balance('KRW-BTC')['avg_buy_price'] if flag else 0
     krw_amount = investor.get_balance("KRW")
-    btc_amount = investor.get_amount("KRW")
+    btc_amount = investor.get_balance("BTC")
     flag = btc_amount > 0
 
     #1분뒤 예측되는 비트코인의 가격
