@@ -10,11 +10,11 @@ import pyupbit as pu
 
 from src.main.cryptoAI.preprocess import preprocessing
 
-TEMPORARY_MODEL_PATH = "model/model_20240228.h5"
+TEMPORARY_MODEL_PATH = "model/datasize2000000-sequence20-epochs100-batchsize350-ckpt0030.h5"
 
 TICKER = "KRW-BTC"
 INTERVAL = "minute1"
-SEQUENCE_LENGTH = 5
+SEQUENCE_LENGTH = 20
 
 TRADING_THRESHOLD = 0.01
 
