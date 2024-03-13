@@ -11,13 +11,13 @@ def trade_engine(investor : Investor):
     #현재 가격에 대한 코드는 추가 작업이 필요함(보유중이지 않다면 예측값을 저장해서 가지고 있어야함)
     #current_price=upbit.get_balance('KRW-BTC')['avg_buy_price'] if flag else 0
     krw_amount = investor.get_balance("KRW")
-    btc_amount = investor.get_amount("KRW")
+    btc_amount = investor.get_balance("BTC")
     flag = btc_amount > 0
 
     #1분뒤 예측되는 비트코인의 가격
     #predict_price=예측값 호출
     predict_state = predict()
-    dis_state=discriminant()
+    dis_state= True
     #현재 비트코인을 보유하고 있을 때
     if flag:
         #예측값이 더 오를것으로 예상될 경우, 아무 행동도 취하지 않음
@@ -46,11 +46,11 @@ def main(investor : Investor):
         current_time=datetime.datetime.now()
         current_minute=current_time.minute
 
-        #시간이 변경됐으면 매매함수 호출
-        if previous_minute==None:
-            previous_minute=current_minute
+        # #시간이 변경됐으면 매매함수 호출
+        # if previous_minute==None:
+        #     previous_minute=current_minute
 
-        elif current_minute!=previous_minute:
+        if current_minute!=previous_minute or previous_minute == None:
             previous_minute=current_minute
             trade_engine(investor)
             print(current_time,investor.get_balance("KRW"),investor.get_balance("BTC"))
