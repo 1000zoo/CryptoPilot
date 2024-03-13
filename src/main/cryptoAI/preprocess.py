@@ -13,7 +13,7 @@ def preprocessing(sequence: DataFrame, sequence_length: int):
     x = scaler.fit_transform(x)
 
     X = []
-    for i in range(len(x) - sequence_length + 1):
+    for i in range(len(x) - sequence_length):
         X.append(x[i : i + sequence_length, :])
 
     return np.array(X).reshape(-1, sequence_length, len(x_cols))

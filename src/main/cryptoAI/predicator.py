@@ -26,8 +26,9 @@ return
 상승 => 1 / 횡보 => 0 / 하락 => -1
 """
 def predict() -> int:
-    ohlcv = pu.get_ohlcv(TICKER, INTERVAL, SEQUENCE_LENGTH + 1)
-    result = model_predict(preprocessing(ohlcv, SEQUENCE_LENGTH))
+    ohlcv = pu.get_ohlcv(TICKER, INTERVAL, SEQUENCE_LENGTH + 2)
+    data = preprocessing(ohlcv, SEQUENCE_LENGTH)
+    result = model_predict(data)
     print(result)
     return _encode(result)
 
