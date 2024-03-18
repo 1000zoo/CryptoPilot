@@ -1,5 +1,6 @@
 import os
 import sys
+import datetime
 
 root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../'))
 sys.path.append(root_path)
@@ -8,15 +9,22 @@ import keras
 import numpy as np
 import pyupbit as pu
 
-from src.main.cryptoAI.preprocess import preprocessing
+from src.main.cryptoAI.preprocess import preprocessing, time_embedding_preprocessing
 
-TEMPORARY_MODEL_PATH = "model/datasize2000000-sequence20-epochs100-batchsize350-ckpt0030.h5"
+TEMPORARY_MODEL_PATH = "model/lstm-time-embedding-sequence20-batchsize64-best-0033.h5"
 
 TICKER = "KRW-BTC"
 INTERVAL = "minute1"
 SEQUENCE_LENGTH = 20
 
 TRADING_THRESHOLD = 0.01
+
+def time_embedding_predict() -> int:
+    ohlcv = pu.get_ohlcv(TICKER, INTERVAL, SEQUENCE_LENGTH + 2)
+    data = time_embedding_preprocessing(ohlcv, SEQUENCE_LENGTH)
+    result = model_predict(data)
+    print(result)
+    return _encode(result)
 
 """
 predict(): 실제로 호출되는 부분 (외부로부터 호출받는 부분)
@@ -28,6 +36,7 @@ return
 def predict() -> int:
     ohlcv = pu.get_ohlcv(TICKER, INTERVAL, SEQUENCE_LENGTH + 2)
     data = preprocessing(ohlcv, SEQUENCE_LENGTH)
+    print(data.shape)
     result = model_predict(data)
     print(result)
     return _encode(result)
@@ -67,4 +76,6 @@ def _encode(result : np.ndarray):
 
 
 if __name__ == "__main__":
-    pass
+    result = time_embedding_predict()
+    print(result)
+
