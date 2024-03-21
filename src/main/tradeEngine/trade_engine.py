@@ -1,7 +1,7 @@
 import pyupbit as pu
 import datetime
 import time
-from src.main.cryptoAI.predicator import predict
+from src.main.cryptoAI.predicator import predict, time_embedding_predict
 from src.main.runner.investor import Investor
 from src.main.tradeEngine.ema_equation import *
 from src.main.tradeEngine.rsi_equation import rsi
