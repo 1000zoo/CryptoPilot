@@ -1,7 +1,7 @@
 import pyupbit as pu
 import datetime
 import time
-from src.main.cryptoAI.predicator import predict
+from src.main.cryptoAI.predicator import predict, time_embedding_predict
 from src.main.runner.investor import Investor
 from src.main.tradeEngine.ema_equation import *
 
@@ -16,7 +16,7 @@ def trade_engine(investor : Investor):
 
     #1분뒤 예측되는 비트코인의 가격
     #predict_price=예측값 호출
-    predict_state = predict()
+    predict_state = time_embedding_predict()
     dis_state= True
     #현재 비트코인을 보유하고 있을 때
     if flag:
